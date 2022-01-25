@@ -95,8 +95,6 @@ HttpHeaders headers = new HttpHeaders();
 		
 	}
 	public void sendSMS(String num,String msg) {
-		
-		   
 	    SMSController.sendMessages(num, msg);
 	    
 	}
