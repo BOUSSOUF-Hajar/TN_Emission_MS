@@ -27,10 +27,11 @@ public class FromAccountService {
 		
 		
 		 Long id= transfert.getEmetteur().getIdClient();
+		 
 		 double montant=transfert.getMontant_transfert();
 	      Compte compte=this.restTemplate.getForObject(
 				 "http://Gestion/get_client_compte/"+id,Compte.class);
-	      
+	      System.out.print(compte.getIdCompte());
 	      double solde=compte.getMontant();
 	      TypeFrais typeFrais=transfert.getFrais();
 	      if(typeFrais==TypeFrais.parClient) {
@@ -76,7 +77,7 @@ public class FromAccountService {
 
 	    // build the request
 	    HttpEntity<Compte> entity = new HttpEntity<>(compte, headers);
-
+	    
 	    // send PUT request to update compte
 	    this.restTemplate.put("http://Gestion/update_Compte/{id}", entity, compte.getIdCompte());
 	}
