@@ -32,6 +32,7 @@ import com.example.SharedLib.entities.*;
 			
 			
 			 Long id= transfert.getAgent().getIdClient();
+			 System.out.println(id);
 			 double montant=transfert.getMontant_transfert();
 		      Compte compte=this.restTemplate.getForObject(
 					 "http://Gestion/get_client_compte/"+id,Compte.class);
