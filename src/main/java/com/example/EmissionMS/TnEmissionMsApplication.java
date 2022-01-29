@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @SpringBootApplication
+
 public class TnEmissionMsApplication {
 
 	public static void main(String[] args) {

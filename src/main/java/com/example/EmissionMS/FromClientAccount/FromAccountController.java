@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.SharedLib.entities.*;
 @RestController
+@CrossOrigin("*")
 public class FromAccountController {
 	 @Autowired
 	private FromAccountService service;
 	
 	
-	@GetMapping("/fromClientAccount")
+	@PutMapping("/fromClientAccount")
 	public String fromAccount(@RequestBody Transfert transfert) {
 		return service.EmiTransfert(transfert);
 	}
