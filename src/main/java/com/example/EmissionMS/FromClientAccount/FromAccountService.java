@@ -22,13 +22,13 @@ import com.example.SharedLib.enums.TypeFrais;
 public class FromAccountService {
 	@Autowired
 	  private RestTemplate restTemplate;
-	public String EmiTransfert(Transfert transfert){
+	public String EmiTransfert(Transfert transfert,Long idd){
 		
 		
-		 Long idd= (long) 6;
+
 		 transfert.setAgent(this.restTemplate.getForObject("http://Gestion/get_Agent/"+idd, Agent.class));
 		 Long id= transfert.getEmetteur().getIdClient();
-		 transfert.setReference("CL"+id+ThreadLocalRandom.current().nextInt(000000,200000));
+		 transfert.setReference("EDP837CL"+id+ThreadLocalRandom.current().nextInt(000000,200000));
 		 transfert.setEtat(EtatTransfert.à_servir);
 		 double montant=transfert.getMontant_transfert();
 	      Compte compte=this.restTemplate.getForObject(

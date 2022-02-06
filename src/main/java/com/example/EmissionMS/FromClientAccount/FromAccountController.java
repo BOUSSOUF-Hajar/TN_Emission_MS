@@ -11,8 +11,8 @@ public class FromAccountController {
 	private FromAccountService service;
 	
 	
-	@PutMapping("/fromClientAccount")
-	public String fromAccount(@RequestBody Transfert transfert) {
-		return service.EmiTransfert(transfert);
+	@PutMapping("/fromClientAccount/{id}")
+	public String fromAccount(@RequestBody Transfert transfert,@PathVariable Long id) {
+		return service.EmiTransfert(transfert,id);
 	}
 }

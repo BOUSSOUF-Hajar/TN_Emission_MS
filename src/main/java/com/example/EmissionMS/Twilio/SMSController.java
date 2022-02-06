@@ -39,7 +39,7 @@ public class SMSController {
     public static void sendMessages(String num,String  msg) {
     		System.out.println("details :"+msg);       
             Message message = Message.creator(
-                new PhoneNumber(num),"MG50417ddbd6e495748f28f99a24017e71",
+                new PhoneNumber("+212"+num),"MG50417ddbd6e495748f28f99a24017e71",
                 msg).create();
             System.out.println("Sent message w/ sid: " + message.getSid());
            
