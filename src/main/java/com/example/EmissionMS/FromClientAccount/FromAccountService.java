@@ -1,37 +1,45 @@
 package com.example.EmissionMS.FromClientAccount;
 
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.List;
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.EmissionMS.Twilio.SMSController;
-import com.example.SharedLib.entities.*;
-import com.example.SharedLib.enums.*;
+import com.example.SharedLib.entities.Agent;
+import com.example.SharedLib.entities.Compte;
+import com.example.SharedLib.entities.Transfert;
+import com.example.SharedLib.enums.EtatTransfert;
+import com.example.SharedLib.enums.TypeFrais;
 @Service
 public class FromAccountService {
 	@Autowired
 	  private RestTemplate restTemplate;
-	public String EmiTransfert(Transfert transfert){
+	public String EmiTransfert(Transfert transfert,Long idd){
 		
 		
-		
+
+		 transfert.setAgent(this.restTemplate.getForObject("http://Gestion/get_Agent/"+idd, Agent.class));
 		 Long id= transfert.getEmetteur().getIdClient();
-		 
+		 transfert.setReference("EDP837CL"+id+ThreadLocalRandom.current().nextInt(000000,200000));
+		 transfert.setEtat(EtatTransfert.à_servir);
 		 double montant=transfert.getMontant_transfert();
 	      Compte compte=this.restTemplate.getForObject(
 				 "http://Gestion/get_client_compte/"+id,Compte.class);
 	      System.out.print(compte.getIdCompte());
+	      Date dateNow=new Date();
+			transfert.setDate_demission(dateNow);
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(new Date());
+	        calendar.add(Calendar.DATE, 70);
+	        transfert.setDelai_de_validite(calendar.getTime());
 	      double solde=compte.getMontant();
 	      TypeFrais typeFrais=transfert.getFrais();
 	      if(typeFrais==TypeFrais.parClient) {
